@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Waypoint III: The Acoustic Haven | Life Journey Map</title>
+  
+  <!-- Fonts Klasik dari Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+  
+  <style>
+    /* RESET & VARIABLE */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg-dark: #0a0806;
+      --parchment: #f5eee2;
+      --parchment-border: #caa368;
+      --gold-accent: #c5a059;
+      --text-dark: #271a10;
+      --vintage-brown: #5c3818;
+      --font-header: 'Cinzel', serif;
+      --font-body: 'Cormorant Garamond', serif;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      background-image: radial-gradient(circle at center, #1c130b 0%, #040302 100%);
+      color: var(--text-dark);
+      font-family: var(--font-body);
+      min-height: 100vh;
+      padding: 20px 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .map-container {
+      width: 100%;
+      max-width: 650px;
+    }
+
+    /* HEADER PETA KLASIK */
+    .map-header {
+      text-align: center;
+      color: var(--gold-accent);
+      margin-bottom: 20px;
+    }
+
+    .waypoint-tag {
+      font-family: var(--font-header);
+      font-size: 0.88rem;
+      letter-spacing: 2px;
+      color: #a88d58;
+    }
+
+    .location-title {
+      font-family: var(--font-header);
+      font-size: 1.8rem;
+      margin: 5px 0;
+      color: #f0e6d2;
+    }
+
+    .coordinates {
+      font-size: 0.95rem;
+      font-style: italic;
+      color: #a0907a;
+    }
+
+    .compass-rose {
+      font-size: 1.8rem;
+      margin-top: 8px;
+    }
+
+    /* PARCHMENT CARD */
+    .parchment-card {
+      background-color: var(--parchment);
+      border: 2px solid var(--parchment-border);
+      border-radius: 6px;
+      padding: 30px 22px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.85), inset 0 0 60px rgba(180, 140, 90, 0.25);
+      position: relative;
+    }
+
+    .section-title {
+      font-family: var(--font-header);
+      font-size: 1.35rem;
+      color: var(--text-dark);
+      text-align: center;
+      margin-bottom: 6px;
+    }
+
+    .section-desc {
+      text-align: center;
+      font-size: 1.1rem;
+      color: #5c4838;
+      margin-bottom: 25px;
+    }
+
+    /* VINTAGE PLAYER UI */
+    .player-box {
+      background: #eadeca;
+      border: 1px solid #bba582;
+      border-radius: 6px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
+    }
+
+    .track-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .track-item {
+      background: #f7f1e6;
+      border: 1px solid #c7b393;
+      border-left: 4px solid var(--vintage-brown);
+      padding: 12px 15px;
+      border-radius: 4px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: all 0.2s ease;
+    }
+
+    .track-item:hover {
+      background: #eee3d0;
+      transform: translateX(3px);
+    }
+
+    .track-item.active {
+      background: #e2d1b5;
+      border-color: var(--vintage-brown);
+    }
+
+    .track-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .track-icon {
+      font-size: 1.3rem;
+    }
+
+    .track-title {
+      font-family: var(--font-header);
+      font-size: 0.98rem;
+      color: var(--vintage-brown);
+      font-weight: 600;
+    }
+
+    .track-desc {
+      font-size: 0.95rem;
+      color: #594636;
+      font-style: italic;
+    }
+
+    .play-badge {
+      font-family: var(--font-header);
+      font-size: 0.8rem;
+      color: #fff;
+      background: var(--vintage-brown);
+      padding: 4px 8px;
+      border-radius: 3px;
+    }
+
+    /* DISPLAY PESAN MELODI */
+    .melody-display {
+      background: #fdfbf7;
+      border: 1px dashed var(--parchment-border);
+      padding: 18px;
+      border-radius: 4px;
+      animation: fadeIn 0.4s ease-in-out;
+    }
+
+    .melody-title {
+      font-family: var(--font-header);
+      font-size: 1.15rem;
+      color: var(--vintage-brown);
+      margin-bottom: 8px;
+      text-align: center;
+    }
+
+    .melody-quote {
+      font-size: 1.1rem;
+      font-style: italic;
+      line-height: 1.6;
+      color: #332215;
+      margin-bottom: 12px;
+      text-align: center;
+    }
+
+    .melody-note {
+      font-size: 1.05rem;
+      line-height: 1.65;
+      color: #4a3829;
+      padding-top: 10px;
+      border-top: 1px solid #ebd9c0;
+    }
+
+    .divider {
+      text-align: center;
+      color: var(--gold-accent);
+      margin: 22px 0;
+    }
+
+    .book-reveal {
+      margin-top: 15px;
+    }
+
+    .book-subtitle {
+      font-family: var(--font-header);
+      font-size: 1.2rem;
+      color: var(--vintage-brown);
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    .book-text {
+      font-size: 1.15rem;
+      line-height: 1.7;
+      text-align: justify;
+      margin-bottom: 12px;
+    }
+
+    .note-box {
+      margin-top: 15px;
+      text-align: center;
+      color: #523b2b;
+      font-size: 1.1rem;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .primary-btn {
+      width: 100%;
+      background: var(--vintage-brown);
+      color: #fff;
+      border: none;
+      padding: 14px;
+      font-family: var(--font-header);
+      font-size: 0.95rem;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-top: 15px;
+      transition: opacity 0.3s ease;
+    }
+
+    .primary-btn.disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="map-container">
+    
+    <!-- HEADER PETA KLASIK -->
+    <header class="map-header">
+      <div class="waypoint-tag">WAYPOINT III OF IV</div>
+      <h1 class="location-title">🎸 The Sanctuary of Melodies</h1>
+      <p class="coordinates">Peta Koordinat: [Harmoni, Ketenangan, & Pelarian]</p>
+      <div class="compass-rose">🧭</div>
+    </header>
+
+    <!-- KONTEN INTERAKTIF: MUSIC PLAYER KLASIK -->
+    <main class="parchment-card">
+      
+      <section id="musicStep">
+        <h2 class="section-title">Putar Harmoni Jiwa</h2>
+        <p class="section-desc">Pilih salah satu rekaman melodi untuk mendengarkan resonansi karaktermu:</p>
+
+        <div class="player-box">
+          <div class="track-list">
+            
+            <div class="track-item" onclick="playTrack(1)">
+              <div class="track-info">
+                <span class="track-icon">🎶</span>
+                <div>
+                  <div class="track-title">Track I: The Independent Strum</div>
+                  <div class="track-desc">Petikan akustik yang tegas, mandiri, dan berani.</div>
+                </div>
+              </div>
+              <span class="play-badge">PLAY</span>
+            </div>
+
+            <div class="track-item" onclick="playTrack(2)">
+              <div class="track-info">
+                <span class="track-icon">☕</span>
+                <div>
+                  <div class="track-title">Track II: Gentle Sanctuary Jazz</div>
+                  <div class="track-desc">Melodi hangat, tempat bermanja dan merasa aman.</div>
+                </div>
+              </div>
+              <span class="play-badge">PLAY</span>
+            </div>
+
+            <div class="track-item" onclick="playTrack(3)">
+              <div class="track-info">
+                <span class="track-icon">🌿</span>
+                <div>
+                  <div class="track-title">Track III: Resonance of Freedom</div>
+                  <div class="track-desc">Harmoni tanpa jeda, luapan kerinduan akan kedamaian.</div>
+                </div>
+              </div>
+              <span class="play-badge">PLAY</span>
+            </div>
+
+          </div>
+
+          <!-- DISPLAY HASIL RESOANASI -->
+          <div id="melodyDisplay" class="melody-display hidden">
+            <div id="melodyTitle" class="melody-title"></div>
+            <div id="melodyQuote" class="melody-quote"></div>
+            <div id="melodyNote" class="melody-note"></div>
+          </div>
+        </div>
+
+        <button id="proceedBtn" class="primary-btn disabled" disabled onclick="revealMusicMeaning()">
+          Buka Makna Buku #3 & Harmoni ➔
+        </button>
+      </section>
+
+      <!-- BAGIAN PENJELASAN BUKU #3 -->
+      <section id="bookSection" class="book-reveal hidden">
+        <div class="divider">✦ ✦ ✦</div>
+
+        <h3 class="book-subtitle">Mengapa Musik & Buku Ini Menyatu Dalam Buketmu?</h3>
+        
+        <p class="book-text">
+          Musik selalu punya cara ajaib untuk menyampaikan apa yang tak sanggup diucapkan oleh kata-kata. Sama seperti petikan gitar yang indah, hidupmu adalah perpaduan nada yang begitu mengagumkan—nada ketegasan saat kamu harus berdiri mandiri, dan nada lembut saat kamu merindukan kehangatan.
+        </p>
+
+        <p class="book-text">
+          Di tengah lingkungan yang menuntutmu untuk selalu patuh dan berada dalam aturan ketat, buku ketiga dan tema musik ini hadir sebagai **pelarian manis**. Sebuah pengingat bahwa di luar sana, ada dunia yang sangat luas, aman, dan siap menyambutmu untuk bernapas lega.
+        </p>
+
+        <p class="book-text">
+          Semoga setiap halaman dari buku ini dan setiap nada yang kamu dengar menjadi pengingat bahwa kamu tidak pernah sendirian, dan kamu berhak mendapatkan kebahagiaan yang sepenuhnya milikmu.
+        </p>
+
+        <div class="note-box">
+          <p><em>"In the quiet harmony of guitar strings, may you find the peace, freedom, and love you so deeply deserve."</em></p>
+        </div>
+      </section>
+
+    </main>
+
+  </div>
+
+  <script>
+    const tracks = {
+      1: {
+        title: 'Track I: The Independent Strum',
+        quote: '"Like a crisp acoustic chord, your independence rings clear and true across every room you walk into."',
+        note: '🎸 **Resonansi Karakter:** Kemandirianmu adalah sesuatu yang sangat elegan. Kamu mampu berdiri di atas kakimu sendiri, menghadapi dunia yang keras tanpa kehilangan martabat dan kecerdasanmu.'
+      },
+      2: {
+        title: 'Track II: Gentle Sanctuary Jazz',
+        quote: '"Behind the strongest solo lies a soft, warm melody waiting for a safe place to rest."',
+        note: '🧸 **Resonansi Karakter:** Sisi manjamu bukanlah kelemahan. Itu adalah bukti bahwa hatimu masih lembut dan hangat. Kamu berhak disayang, dimanja, dan dilindungi tanpa rasa takut.'
+      },
+      3: {
+        title: 'Track III: Resonance of Freedom',
+        quote: '"Freedom is the music playing when no strictly imposed walls can dictate your tempo anymore."',
+        note: '🍃 **Resonansi Karakter:** Kedamaian sejati akan selalu menjadi milikmu. Lingkungan yang menekan mungkin pernah membatasi gerakmu, tapi ia tak pernah bisa mengurung jiwa dan kebebasan bermimpimu.'
+      }
+    };
+
+    let selected = false;
+
+    function playTrack(id) {
+      // Highlight track yang diputar
+      const items = document.querySelectorAll('.track-item');
+      items.forEach((item, index) => {
+        if (index === id - 1) {
+          item.classList.add('active');
+        } else {
+          item.classList.remove('active');
+        }
+      });
+
+      // Tampilkan display pesan
+      const display = document.getElementById('melodyDisplay');
+      const titleEl = document.getElementById('melodyTitle');
+      const quoteEl = document.getElementById('melodyQuote');
+      const noteEl = document.getElementById('melodyNote');
+
+      display.classList.remove('hidden');
+      titleEl.innerText = tracks[id].title;
+      quoteEl.innerText = tracks[id].quote;
+      noteEl.innerHTML = tracks[id].note;
+
+      // Enable Tombol Lanjut
+      const proceedBtn = document.getElementById('proceedBtn');
+      proceedBtn.classList.remove('disabled');
+      proceedBtn.removeAttribute('disabled');
+      selected = true;
+    }
+
+    function revealMusicMeaning() {
+      if (!selected) return;
+      
+      const bookSection = document.getElementById('bookSection');
+      bookSection.classList.remove('hidden');
+
+      // Smooth scroll ke penjelasan
+      bookSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  </script>
+</body>
+</html>
